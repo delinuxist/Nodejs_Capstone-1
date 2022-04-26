@@ -68,8 +68,21 @@ const server = http.createServer((req, res) => {
         res.end("Sorry Unable To Write File");
       } else {
         // display a message
-
+        res.writeHead(201, { "Content-Type": "text/plain" });
         res.end("Your OS info has been saved successfully!");
+      }
+    });
+    // if request url doesn't match any specified route
+  } else {
+    // read html file
+    readFile("./pages/404.html", (err, data) => {
+      //check if there's error
+      if (err) {
+        res.writeHead(404);
+        res.write("Sorry File Not found");
+      } else {
+        // display the file's data
+        res.end(data);
       }
     });
   }
